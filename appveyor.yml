@@ -24,6 +24,7 @@ test:
   categories:
     except:
     - Integration
+    - Manual
 cache:
   - packages -> **\packages.config
 deploy:
