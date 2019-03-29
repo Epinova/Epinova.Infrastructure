@@ -1,0 +1,20 @@
+﻿<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>Epinova Infrastructure</title>
+    <authors>Tarjei olsen</authors>
+    <owners>Epinova AS</owners>
+    <iconUrl>http://www.epinova.no/favicon.ico</iconUrl>
+    <projectUrl>https://github.com/Epinova/Epinova.Infrastructure</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>Real basic stuff for cross module code sharing</description>
+    <releaseNotes></releaseNotes>
+    <copyright>Copyright 2019 - Epinova AS</copyright>
+    <tags></tags>
+    <dependencies>
+      <dependency id="EPiServer.Framework" version="[11.1, 12)" />
+    </dependencies>
+  </metadata>
+</package>

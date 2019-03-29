@@ -98,6 +98,7 @@
     <Compile Include="ServiceResponseBase.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Epinova.Infrastructure.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
