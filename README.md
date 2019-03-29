@@ -1,2 +1,2 @@
-# Epinova.NetsPaymentGateway
-Epinova's take on a NETS payment gateway API
+# Epinova.Infrastructure
+Real basic stuff for cross module sharing of code. Keep it simple in here. 
