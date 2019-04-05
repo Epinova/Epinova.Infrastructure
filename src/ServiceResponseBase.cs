@@ -1,14 +1,7 @@
-﻿using System.Collections.Generic;
-
-namespace Epinova.Infrastructure
+﻿namespace Epinova.Infrastructure
 {
     public abstract class ServiceResponseBase
     {
-        protected ServiceResponseBase()
-        {
-            ErrorList = new List<string>();
-        }
-
-        public List<string> ErrorList { get; }
+        public string ErrorMessage { get; set; }
     }
 }

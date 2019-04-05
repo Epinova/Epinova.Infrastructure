@@ -105,9 +105,7 @@ namespace Epinova.Infrastructure
 
         private static T CreateErrorResult<T>(string message) where T : ServiceResponseBase, new()
         {
-            var result = new T();
-            result.ErrorList.Add(message);
-            return result;
+            return new T { ErrorMessage = message };
         }
 
         private async Task<T> ParseJsonContent<T>(HttpContent content)
