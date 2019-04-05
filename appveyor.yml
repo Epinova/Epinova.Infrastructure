@@ -4,7 +4,7 @@ image: Visual Studio 2017
 configuration: Release
 platform: Any CPU
 environment:
-  sonarcloudorg: Epinova
+  sonarcloudorg: epinova
   sonarcloudproj: Epinova_Epinova.Infrastructure
   sonarcloudkey:
     secure: a8EBBaKMSil4vIqG9OeOqIrroedM5kAXxVMOpdqIAoAdFr2WUz4DZEm0QVQacmAS
