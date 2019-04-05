@@ -53,8 +53,11 @@ for:
       - master
 
   before_build:
+  - cmd: IF DEFINED sonarcloudkey (
   - cmd: nuget restore
   - cmd: choco install "sonarscanner-msbuild-net46" -y
   - cmd: SonarScanner.MSBuild.exe begin /k:"%sonarcloudproj%" /d:"sonar.host.url=https://sonarcloud.io" /o:"%sonarcloudorg%" /d:"sonar.login=%sonarcloudkey%"
+  - cmd: )
+
   after_build:
-  - cmd: SonarScanner.MSBuild.exe end /d:"sonar.login=%sonarcloudkey%"
+  - cmd: IF DEFINED sonarcloudkey SonarScanner.MSBuild.exe end /d:"sonar.login=%sonarcloudkey%"
