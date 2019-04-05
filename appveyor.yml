@@ -36,7 +36,7 @@ cache:
 deploy:
   provider: NuGet
   api_key:
-    secure: /L7BuZN2mNqeHYM5tnD8Lyh5j+k/nd3vuurOt4zYwmCGTKcGvEo3afO0MWOTj5Yn
+    secure: ZZbW4ozun1BxPT+nDSKv6rBtWGE4z5t+iRWcpiZ9GPlUWqYI/x5wXnCaKK10VRkz
   skip_symbols: false
   artifact: /.*\.nupkg/
   on:
@@ -54,7 +54,10 @@ for:
 
   before_build:
   - cmd: nuget restore
-  - cmd: choco install "sonarscanner-msbuild-net46" -y
-  - cmd: SonarScanner.MSBuild.exe begin /k:"%sonarcloudproj%" /d:"sonar.host.url=https://sonarcloud.io" /o:"%sonarcloudorg%" /d:"sonar.login=%sonarcloudkey%"
+  - cmd: IF DEFINED sonarcloudkey (
+         choco install "sonarscanner-msbuild-net46" -y
+         SonarScanner.MSBuild.exe begin /k:"%sonarcloudproj%" /d:"sonar.host.url=https://sonarcloud.io" /o:"%sonarcloudorg%" /d:"sonar.login=%sonarcloudkey%"
+         )
+
   after_build:
-  - cmd: SonarScanner.MSBuild.exe end /d:"sonar.login=%sonarcloudkey%"
+  - cmd: IF DEFINED sonarcloudkey SonarScanner.MSBuild.exe end /d:"sonar.login=%sonarcloudkey%"
