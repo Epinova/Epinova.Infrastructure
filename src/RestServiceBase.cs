@@ -50,7 +50,7 @@ namespace Epinova.Infrastructure
             return response;
         }
 
-        public async Task<T> ParseJson<T>(HttpResponseMessage response) where T : ServiceResponseBase, new()
+        public async Task<T> ParseJson<T>(HttpResponseMessage response) where T : IServiceResponseMessage, new()
         {
             try
             {
@@ -63,7 +63,7 @@ namespace Epinova.Infrastructure
             }
         }
 
-        public async Task<T[]> ParseJsonArray<T>(HttpResponseMessage response) where T : ServiceResponseBase, new()
+        public async Task<T[]> ParseJsonArray<T>(HttpResponseMessage response) where T : IServiceResponseMessage, new()
         {
             try
             {
@@ -76,7 +76,7 @@ namespace Epinova.Infrastructure
             }
         }
 
-        public async Task<T> ParseXml<T>(HttpResponseMessage response) where T : ServiceResponseBase, new()
+        public async Task<T> ParseXml<T>(HttpResponseMessage response) where T : IServiceResponseMessage, new()
         {
             string xml = null;
             try
@@ -103,7 +103,7 @@ namespace Epinova.Infrastructure
             return String.Join("&", nvc.Select(pair => $"{pair.Key}={pair.Value}"));
         }
 
-        private static T CreateErrorResult<T>(string message) where T : ServiceResponseBase, new()
+        private static T CreateErrorResult<T>(string message) where T : IServiceResponseMessage, new()
         {
             return new T { ErrorMessage = message };
         }

@@ -95,7 +95,7 @@
     <Compile Include="Logging\LoggerExtensions.cs" />
     <Compile Include="RestServiceBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServiceResponseBase.cs" />
+    <Compile Include="IServiceResponseMessage.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Epinova.Infrastructure.nuspec" />
