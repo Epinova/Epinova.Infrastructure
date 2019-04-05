@@ -21,9 +21,9 @@ nuget:
 before_build:
 - cmd: nuget restore
 - cmd: choco install "sonarscanner-msbuild-net46" -y
-- cmd: SonarScanner.MSBuild.exe begin /k:"$(sonarcloudproj)" /d:"sonar.host.url=https://sonarcloud.io" /o:"$(sonarcloudorg)" /d:"sonar.login=$(sonarcloudkey)"
+- cmd: SonarScanner.MSBuild.exe begin /k:"%sonarcloudproj%" /d:"sonar.host.url=https://sonarcloud.io" /o:"%sonarcloudorg%" /d:"sonar.login=%sonarcloudkey%"
 after_build:
-- cmd: SonarScanner.MSBuild.exe end /d:"sonar.login=$(sonarcloudkey)"
+- cmd: SonarScanner.MSBuild.exe end /d:"sonar.login=%sonarcloudkey%"
 pull_requests:
   do_not_increment_build_number: true
 build:
