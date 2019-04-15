@@ -26,11 +26,13 @@ pull_requests:
 build:
   publish_nuget: true
   verbosity: minimal
-test:
-  categories:
-    except:
-    - Integration
-    - Manual
+test_script:
+- cmd: '%xunit20%\xunit.console tests\bin\Release\Epinova.InfrastructureTests.dll -notrait "category=Integration" -notrait "category=Manual" -appveyor -xml xunit.test.results.xml'
+#test:
+#  categories:
+#    except:
+#    - Integration
+#    - Manual
 cache:
   - packages -> **\packages.config
 deploy:
@@ -54,7 +56,7 @@ for:
 
   before_build:
   - cmd: nuget restore
-  - cmd: IF DEFINED sonarcloudkey choco install "sonarscanner-msbuild-net46" -y && SonarScanner.MSBuild.exe begin /k:"%sonarcloudproj%" /d:"sonar.host.url=https://sonarcloud.io" /o:"%sonarcloudorg%" /d:"sonar.login=%sonarcloudkey%"
+  - cmd: IF DEFINED sonarcloudkey choco install "sonarscanner-msbuild-net46" -y && SonarScanner.MSBuild.exe begin /k:"%sonarcloudproj%" /d:"sonar.host.url=https://sonarcloud.io" /o:"%sonarcloudorg%" /d:"sonar.login=%sonarcloudkey%" /d:sonar.cs.xunit.reportsPaths="%CD%\xunit.test.results.xml"
 
   after_build:
   - cmd: IF DEFINED sonarcloudkey SonarScanner.MSBuild.exe end /d:"sonar.login=%sonarcloudkey%"
