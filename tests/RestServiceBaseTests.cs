@@ -52,5 +52,18 @@ namespace Epinova.InfrastructureTests
 
             Assert.Equal(message.Content, result.Content);
         }
+
+        #region Nested type: TestableRestService
+
+        private class TestableRestService : RestServiceBase
+        {
+            public TestableRestService(ILogger log) : base(log)
+            {
+            }
+
+            public override string ServiceName => nameof(TestableRestService);
+        }
+
+        #endregion
     }
 }
