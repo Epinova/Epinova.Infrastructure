@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
@@ -35,7 +34,7 @@ namespace Epinova.Infrastructure
                 return null;
             }
 
-            if (response.StatusCode != HttpStatusCode.OK)
+            if (!response.IsSuccessStatusCode)
             {
                 _log.Warning($"Expected HTTP status code OK from {ServiceName} when fetching data. Actual: {response.StatusCode}. Method: {work.Method?.Name}.");
                 return isVerbose ? response : null;
