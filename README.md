@@ -33,6 +33,19 @@ Reference loops are ignored using built in loop handling form Newtonsoft.Json
 
 If you have special needs for controlling how objects are serialized for logging purposes, you can decorate your model class being logged with the `ICustomLogMessage` contract. The implementation of `ICustomLogMessage.ToLoggableString()` will decide the log message.
 
+```
+public class Person : ICustomLogMessage
+{
+  public string Name { get; set; }
+  public string SocialSecurityNumber { get; set; }
+
+  public string ToLoggableString()
+  {
+    return $"Name: {Name}, SocialSecurityNumber: masked in logs";
+  }
+}
+```
+
 ### Epinova.Infrastructure.RestServiceBase
 
 Implement a service with a static read-only instance of System.Net.Http.HttpClient. Let it live – don't dispose it after each call. Inherit Epinova.Infrastructure.RestServiceBase, and use the CallAsync method to safely make API calls
