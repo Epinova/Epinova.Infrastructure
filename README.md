@@ -62,8 +62,6 @@ The module is published on nuget.org.
 nuget install Epinova.Infrastructure
 ```
 
-End with an example of getting some data out of the system or using it for a little demo
-
 ## Built With
 
 * .Net Framework 4.6.2
