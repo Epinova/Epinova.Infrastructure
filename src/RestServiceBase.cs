@@ -21,7 +21,14 @@ namespace Epinova.Infrastructure
 
         public abstract string ServiceName { get; }
 
-        public async Task<HttpResponseMessage> Call(Func<Task<HttpResponseMessage>> work, bool isVerbose = false)
+        /// <summary>
+        /// Safely call API method with the provided work. Exceptions are catched and logged. Response message
+        /// is returned if the HTTP status code is greater than (including) 200 and 299
+        /// </summary>
+        /// <param name="work">The work load to perform</param>
+        /// <param name="isVerbose">Set to true if you need response messages with response codes outside 200-299 returned. In case you need to read response body of a 404 ore something.</param>
+        /// <returns></returns>
+        public async Task<HttpResponseMessage> CallAsync(Func<Task<HttpResponseMessage>> work, bool isVerbose = false)
         {
             HttpResponseMessage response;
             try
@@ -49,24 +56,18 @@ namespace Epinova.Infrastructure
             return response;
         }
 
-        public async Task<T> ParseJson<T>(HttpResponseMessage response) where T : IServiceResponseMessage, new()
+        /// <summary>
+        /// Deserializes the JSON structure contained by the specified <see cref="HttpResponseMessage.Content"/>
+        /// into an array of the specified type.
+        /// </summary>
+        /// <typeparam name="T">The type of the object to deserialize.</typeparam>
+        /// <param name="response">The response message Containing the JSON to deserialize.</param>
+        /// <returns>The instance of <typeparamref name="T[]" /> being deserialized.</returns>
+        public async Task<T[]> ParseJsonArrayAsync<T>(HttpResponseMessage response) where T : IServiceResponseMessage, new()
         {
             try
             {
-                return await ParseJsonContent<T>(response.Content);
-            }
-            catch (Exception ex)
-            {
-                _log.Error("Deserializing json failed.", ex);
-                return CreateErrorResult<T>("Deserializing json failed");
-            }
-        }
-
-        public async Task<T[]> ParseJsonArray<T>(HttpResponseMessage response) where T : IServiceResponseMessage, new()
-        {
-            try
-            {
-                return await ParseJsonContent<T[]>(response.Content);
+                return await ParseJsonContentAsync<T[]>(response.Content);
             }
             catch (Exception ex)
             {
@@ -75,7 +76,34 @@ namespace Epinova.Infrastructure
             }
         }
 
-        public async Task<T> ParseXml<T>(HttpResponseMessage response) where T : IServiceResponseMessage, new()
+        /// <summary>
+        /// Deserializes the JSON structure contained by the specified <see cref="HttpResponseMessage.Content"/>
+        /// into an instance of the specified type.
+        /// </summary>
+        /// <typeparam name="T">The type of the object to deserialize.</typeparam>
+        /// <param name="response">The response message Containing the JSON to deserialize.</param>
+        /// <returns>The instance of <typeparamref name="T" /> being deserialized.</returns>
+        public async Task<T> ParseJsonAsync<T>(HttpResponseMessage response) where T : IServiceResponseMessage, new()
+        {
+            try
+            {
+                return await ParseJsonContentAsync<T>(response.Content);
+            }
+            catch (Exception ex)
+            {
+                _log.Error("Deserializing json failed.", ex);
+                return CreateErrorResult<T>("Deserializing json failed");
+            }
+        }
+
+        /// <summary>
+        /// Deserializes the XML structure contained by the specified <see cref="HttpResponseMessage.Content"/>
+        /// into an instance of the specified type.
+        /// </summary>
+        /// <typeparam name="T">The type of the object to deserialize.</typeparam>
+        /// <param name="response">The response message Containing the XML to deserialize.</param>
+        /// <returns>The instance of <typeparamref name="T" /> being deserialized.</returns>
+        public async Task<T> ParseXmlAsync<T>(HttpResponseMessage response) where T : IServiceResponseMessage, new()
         {
             string xml = null;
             try
@@ -83,7 +111,7 @@ namespace Epinova.Infrastructure
                 var serializer = new XmlSerializer(typeof(T));
 
                 xml = await response.Content.ReadAsStringAsync();
-                _log.Debug("Raw XML: {0}", xml);
+                _log.Debug($"Raw XML: {xml}");
 
                 using (var reader = new StringReader(xml))
                 {
@@ -97,6 +125,9 @@ namespace Epinova.Infrastructure
             }
         }
 
+        /// <summary>
+        /// Convert a dictionary to a query string parameter list
+        /// </summary>
         protected static string BuildQueryString(IDictionary<string, string> nvc)
         {
             return String.Join("&", nvc.Select(pair => $"{pair.Key}={pair.Value}"));
@@ -107,12 +138,12 @@ namespace Epinova.Infrastructure
             return new T { ErrorMessage = message };
         }
 
-        private async Task<T> ParseJsonContent<T>(HttpContent content)
+        private async Task<T> ParseJsonContentAsync<T>(HttpContent content)
         {
             if (_log.IsDebugEnabled())
             {
                 string json = await content.ReadAsStringAsync();
-                _log.Debug("Raw JSON: {0}", json);
+                _log.Debug($"Raw JSON: {json}");
                 return JsonConvert.DeserializeObject<T>(json);
             }
 

@@ -118,6 +118,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Factory.cs" />
+    <Compile Include="LoggerMockExtensions.cs" />
     <Compile Include="Logging\LogItemsContractResolverTests.cs" />
     <Compile Include="Logging\LoggerExtensionsTests.cs" />
     <Compile Include="Logging\PropertyXhtmlString.cs" />
