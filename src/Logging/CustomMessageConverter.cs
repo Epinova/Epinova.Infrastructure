@@ -22,7 +22,7 @@ namespace Epinova.Infrastructure.Logging
 
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
-            ICustomLogMessage customLogger = value as ICustomLogMessage;
+            var customLogger = value as ICustomLogMessage;
 
             writer.WriteValue(customLogger == null ? value : customLogger.ToLoggableString());
         }

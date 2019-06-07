@@ -10,6 +10,29 @@ Key features are extensions to EPiServer's ILogger interface for logging objects
 
 ## Getting Started
 
+### Epinova.Infrastructure.Logging
+
+This namespace contains extension method to `EPiServer.Logging.ILogger` interface. Enables you to send in entire object instances for logging of coplex typs. The types will be serialized as JSON structures in the log message. This can be useful to avoid lots of string concatenation code in logger calls.
+
+Use this:
+```
+var model = new { Foo = "foo", Bar = "bar" };
+_log.Information(new { message = "some message", model });
+```
+Instead of this:
+```
+var model = new { Foo = "foo", Bar = "bar" };
+_log.Information($"some message. Foo: {mdel.Foo}, Bar: {model.Bar}");
+```
+
+Select EPiServer properties will be excluded from being serialized in the log message. These include:
+* XhtmlString
+* XForm
+
+Reference loops are ignored using built in loop handling form Newtonsoft.Json
+
+If you have special needs for controlling how objects are serialized for logging purposes, you can decorate your model class being logged with the `ICustomLogMessage` contract. The implementation of `ICustomLogMessage.ToLoggableString()` will decide the log message.
+
 ### Epinova.Infrastructure.RestServiceBase
 
 Implement a service with a static read-only instance of System.Net.Http.HttpClient. Let it live – don't dispose it after each call. Inherit Epinova.Infrastructure.RestServiceBase, and use the CallAsync method to safely make API calls
