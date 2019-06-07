@@ -1,7 +1,7 @@
 # Epinova.Infrastructure
 
 Real basic stuff for cross module sharing of code. We'll keep it simple in here.
-Key features are extensions to EPiServer's ILogger interface for logging objects (not only strings). and a base class for web api calls.
+Key features are extensions to EPiServer's ILogger interface for logging objects (not only strings). and a base class for making web api calls.
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=Epinova.Infrastructure&metric=alert_status)](https://sonarcloud.io/dashboard?id=Epinova.Infrastructure)
 [![Build status](https://ci.appveyor.com/api/projects/status/5gmhan996hx2aknm/branch/master?svg=true)](https://ci.appveyor.com/project/Epinova_AppVeyor_Team/epinova-infrastructure/branch/master)
