@@ -10,7 +10,7 @@ Key features are extensions to EPiServer's ILogger interface for logging objects
 
 ## Getting Started
 
-### Epinoova.Infrastructure.RestServiceBase
+### Epinova.Infrastructure.RestServiceBase
 
 Implement a service with a static read-only instance of System.Net.Http.HttpClient. Let it live – don't dispose it after each call. Inherit Epinova.Infrastructure.RestServiceBase, and use the CallAsync method to safely make API calls
 
@@ -18,7 +18,7 @@ Implement a service with a static read-only instance of System.Net.Http.HttpClie
 public class AwesomeService : RestServiceBase
 {
     private static readonly HttpClient Client = new HttpClient { BaseAddress = new Uri("https://some.api/address/") };
-	private readonly ILogger _log;
+    private readonly ILogger _log;
 
     public AwesomeService(ILogger log) : base(log)
     {
