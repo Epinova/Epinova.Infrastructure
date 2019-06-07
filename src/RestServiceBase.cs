@@ -19,8 +19,6 @@ namespace Epinova.Infrastructure
             _log = log;
         }
 
-        public abstract string ServiceName { get; }
-
         /// <summary>
         /// Safely call API method with the provided work. Exceptions are catched and logged. Response message
         /// is returned if the HTTP status code is greater than (including) 200 and 299
@@ -37,19 +35,19 @@ namespace Epinova.Infrastructure
             }
             catch (Exception ex)
             {
-                _log.Error($"{ServiceName} call failed horribly. Method: {work.Method?.Name}.", ex);
+                _log.Error($"{GetType().Name} call failed horribly. Method: {work.Method?.Name}.", ex);
                 return null;
             }
 
             if (!response.IsSuccessStatusCode)
             {
-                _log.Warning($"Expected HTTP status code OK from {ServiceName} when fetching data. Actual: {response.StatusCode}. Method: {work.Method?.Name}.");
+                _log.Warning($"Expected HTTP status code OK from {GetType().Name} when fetching data. Actual: {response.StatusCode}. Method: {work.Method?.Name}.");
                 return isVerbose ? response : null;
             }
 
             if (response.Content == null)
             {
-                _log.Warning($"Could not fetch data from {ServiceName}. Service returned NULL. Method: {work.Method?.Name}.");
+                _log.Warning($"Could not fetch data from {GetType().Name}. Service returned NULL. Method: {work.Method?.Name}.");
                 return isVerbose ? response : null;
             }
 

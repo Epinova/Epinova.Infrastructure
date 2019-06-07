@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
@@ -29,6 +30,17 @@ namespace Epinova.InfrastructureTests
             HttpResponseMessage result = await _service.CallAsync(() => sss);
 
             Assert.Null(result);
+        }
+
+        [Fact]
+        public async Task Call_ReturnsBadRequestStatusCode_LogWarning()
+        {
+            var message = new HttpResponseMessage { StatusCode = HttpStatusCode.BadRequest, Content = new StringContent(Factory.GetString()) };
+            Task<HttpResponseMessage> sss = Task.FromResult(message);
+            Func<Task<HttpResponseMessage>>  work = () => sss;
+            await _service.CallAsync(work);
+
+            _logMock.VerifyLog(Level.Warning, $"Expected HTTP status code OK from {_service.GetType().Name} when fetching data. Actual: {message.StatusCode}. Method: {work.Method?.Name}.", Times.Once());
         }
 
         [Theory]
@@ -203,8 +215,6 @@ namespace Epinova.InfrastructureTests
             public TestableRestService(ILogger log) : base(log)
             {
             }
-
-            public override string ServiceName => nameof(TestableRestService);
         }
 
         #endregion
