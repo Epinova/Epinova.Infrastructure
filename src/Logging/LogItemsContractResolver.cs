@@ -25,7 +25,6 @@ namespace Epinova.Infrastructure.Logging
             return result;
         }
 
-
         private static bool IsSafeType(Type candidate)
         {
             if (candidate == null
