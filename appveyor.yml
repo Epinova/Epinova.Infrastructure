@@ -2,7 +2,7 @@ version: 11.1.0.{build}
 skip_tags: true
 image: Visual Studio 2017
 configuration: Release
-platform: Any CPU
+#platform: Any CPU
 environment:
   sonarcloudorg: epinova
   sonarcloudproj: Epinova.Infrastructure
@@ -10,16 +10,18 @@ environment:
     secure: 0VvcxYCPLglmyB87e5B1vRk0nHq8KUX0ND/qLkCs1RaGULzo1Q+XPHOZgioTbEPZ
 init:
 - cmd: nuget sources add -Name Episerver -Source http://nuget.episerver.com/feed/packages.svc/
-assembly_info:
+dotnet_csproj:
   patch: true
-  file: '**\AssemblyInfo.*'
+  file: '**\*.csproj'
+  version: '{version}'
+  package_version: '{version}'
   assembly_version: '{version}'
-  assembly_file_version: '{version}'
-  assembly_informational_version: '{version}'
+  file_version: '{version}'
+  informational_version: '{version}'
 nuget:
   project_feed: true
 before_build:
-- cmd: nuget restore
+#- cmd: nuget restore
 - cmd: IF DEFINED sonarcloudkey choco install sonarscanner-msbuild-net46 opencover.portable -y && SonarScanner.MSBuild.exe begin /k:"%sonarcloudproj%" /d:"sonar.host.url=https://sonarcloud.io" /o:"%sonarcloudorg%" /d:"sonar.branch.name=%APPVEYOR_REPO_BRANCH%" /d:"sonar.login=%sonarcloudkey%" /d:sonar.cs.opencover.reportsPaths="%APPVEYOR_BUILD_FOLDER%\xunit.opencover.results.xml" /d:sonar.cs.xunit.reportsPaths="%APPVEYOR_BUILD_FOLDER%\xunit.test.results.xml"
 after_test:
 - cmd: IF DEFINED sonarcloudkey SonarScanner.MSBuild.exe end /d:"sonar.login=%sonarcloudkey%"
