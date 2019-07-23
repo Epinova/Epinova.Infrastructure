@@ -1,13 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.28307.539
+VisualStudioVersion = 15.0.28307.757
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epinova.Infrastructure", "src\Epinova.Infrastructure.csproj", "{33F74BC1-D176-49F7-882B-E3C5344431CB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Epinova.Infrastructure", "src\Epinova.Infrastructure.csproj", "{F77FA9DA-C228-4257-8C66-B53650324B63}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Epinova.InfrastructureTests", "tests\Epinova.InfrastructureTests.csproj", "{72B49791-242A-43EE-BF3F-7F855B81E40F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Epinova.InfrastructureTests", "tests\Epinova.InfrastructureTests.csproj", "{D4BA83D4-00BF-46D9-9231-A7FB07585052}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "assets", "assets", "{B292FEA1-084D-4AF2-B0BD-82E3452D5DED}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "assets", "assets", "{F61BF310-FDB7-49FE-A371-16B94FEDEE92}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
 		appveyor.yml = appveyor.yml
@@ -21,19 +21,19 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{33F74BC1-D176-49F7-882B-E3C5344431CB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{33F74BC1-D176-49F7-882B-E3C5344431CB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{33F74BC1-D176-49F7-882B-E3C5344431CB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{33F74BC1-D176-49F7-882B-E3C5344431CB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{72B49791-242A-43EE-BF3F-7F855B81E40F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{72B49791-242A-43EE-BF3F-7F855B81E40F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{72B49791-242A-43EE-BF3F-7F855B81E40F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{72B49791-242A-43EE-BF3F-7F855B81E40F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F77FA9DA-C228-4257-8C66-B53650324B63}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F77FA9DA-C228-4257-8C66-B53650324B63}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F77FA9DA-C228-4257-8C66-B53650324B63}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F77FA9DA-C228-4257-8C66-B53650324B63}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D4BA83D4-00BF-46D9-9231-A7FB07585052}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D4BA83D4-00BF-46D9-9231-A7FB07585052}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D4BA83D4-00BF-46D9-9231-A7FB07585052}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D4BA83D4-00BF-46D9-9231-A7FB07585052}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {087478C4-474C-496E-9AF3-D556D588A313}
+		SolutionGuid = {7D037705-4945-4805-8941-0CA9A7548AC8}
 	EndGlobalSection
 EndGlobal
