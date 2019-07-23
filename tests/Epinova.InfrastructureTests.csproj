@@ -117,6 +117,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AsyncHelperTests.cs" />
     <Compile Include="Factory.cs" />
     <Compile Include="LoggerMockExtensions.cs" />
     <Compile Include="Logging\CustomMessageConverterTests.cs" />

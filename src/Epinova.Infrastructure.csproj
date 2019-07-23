@@ -89,6 +89,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AsyncHelper.cs" />
     <Compile Include="Logging\LogItemsContractResolver.cs" />
     <Compile Include="Logging\CustomMessageConverter.cs" />
     <Compile Include="Logging\ICustomLogMessage.cs" />
