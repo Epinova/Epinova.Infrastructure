@@ -2,12 +2,13 @@ version: 11.1.0.{build}
 skip_tags: true
 image: Visual Studio 2017
 configuration: Release
-#platform: Any CPU
+platform: Any CPU
 environment:
   sonarcloudorg: epinova
   sonarcloudproj: Epinova.Infrastructure
   sonarcloudkey:
     secure: 0VvcxYCPLglmyB87e5B1vRk0nHq8KUX0ND/qLkCs1RaGULzo1Q+XPHOZgioTbEPZ
+  #targetFramework: netstandard2.0
 init:
 - cmd: nuget sources add -Name Episerver -Source http://nuget.episerver.com/feed/packages.svc/
 dotnet_csproj:
@@ -31,7 +32,7 @@ build:
   publish_nuget: true
   verbosity: minimal
 test_script:
-- cmd: 'OpenCover.Console.exe -register:user -target:"%xunit20%\xunit.console.exe" -targetargs:"tests\bin\Release\Epinova.InfrastructureTests.dll -noshadow -xml xunit.test.results.xml -appveyor" -output:%APPVEYOR_BUILD_FOLDER%\xunit.opencover.results.xml -coverbytest:*Tests.dll'
+- cmd: 'OpenCover.Console.exe -register:user -target:"%xunit20%\xunit.console.exe" -targetargs:"tests\bin\%configuration%\%target%\Epinova.InfrastructureTests.dll -noshadow -xml xunit.test.results.xml -appveyor" -output:%APPVEYOR_BUILD_FOLDER%\xunit.opencover.results.xml -coverbytest:*Tests.dll'
 cache:
   - packages -> **\packages.config
 deploy:
