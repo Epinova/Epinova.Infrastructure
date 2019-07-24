@@ -43,5 +43,5 @@ deploy:
   skip_symbols: false
   artifact: /.*\.nupkg/
   on:
-    branch: masterx
-    APPVEYOR_REPO_BRANCH: masterx
+    branch: master
+    APPVEYOR_REPO_BRANCH: master
