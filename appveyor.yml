@@ -36,7 +36,7 @@ build:
 #    - Manual
 test_script:
 #- cmd: 'OpenCover.Console.exe -register:user -target:"%xunit20%\xunit.console.exe" -targetargs:"tests\bin\%configuration%\netcoreapp2.1\Epinova.InfrastructureTests.dll -noshadow -xml xunit.test.results.xml -appveyor -notrait Category=Integration -notrait Category=Manual" -output:%APPVEYOR_BUILD_FOLDER%\xunit.opencover.results.xml -coverbytest:*Tests.dll'
-- cmd: 'OpenCover.Console.exe -register:user -target:"dotnet.exe" -targetargs:"test --no-build -c %configuration% -l trx;xunit.test.results.xml --filter Category!=Integration&Category!=Manual" -output:%APPVEYOR_BUILD_FOLDER%\xunit.opencover.results.xml -coverbytest:*Tests.dll'
+- cmd: 'OpenCover.Console.exe -register:user -target:"dotnet.exe" -targetargs:"test --no-build -c %configuration% -l \"trx;LogFileName=%APPVEYOR_BUILD_FOLDER%\xunit.test.results.xml\" --filter Category!=Integration&Category!=Manual" -output:%APPVEYOR_BUILD_FOLDER%\xunit.opencover.results.xml -coverbytest:*Tests.dll'
 cache:
   - packages -> **\packages.config
 deploy:
