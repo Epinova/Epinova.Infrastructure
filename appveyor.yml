@@ -42,7 +42,7 @@ build:
 #    - Manual
 test_script:
 #- cmd: dotnet test --no-build -c %configuration% -l "trx;LogFileName=%APPVEYOR_BUILD_FOLDER%\test.results.xml" --filter "Category!=Integration&Category!=Manual"
-- cmd: 'OpenCover.Console.exe -register:user -target:"dotnet.exe" -targetargs:"test --no-build -c %configuration% -l \"trx;LogFileName=%APPVEYOR_BUILD_FOLDER%\test.results.xml\" --filter Category!=Integration&Category!=Manual" -output:%APPVEYOR_BUILD_FOLDER%\opencover.results.xml -coverbytest:*Tests.dll'
+- cmd: 'OpenCover.Console.exe -register:user -target:"dotnet.exe" -targetargs:"test --no-build -c %configuration% -l \"trx;LogFileName=%APPVEYOR_BUILD_FOLDER%\test.results.xml\" --filter Category!=Integration&Category!=Manual" -output:%APPVEYOR_BUILD_FOLDER%\opencover.results.xml -coverbytest:*Tests.dll' -oldStyle
 cache:
   - packages -> **\packages.config
 deploy:

@@ -10,7 +10,6 @@
     <PackageProjectUrl>https://github.com/Epinova/Epinova.Infrastructure</PackageProjectUrl>
     <PackageIconUrl>http://www.epinova.no/favicon.ico</PackageIconUrl>
     <RepositoryUrl>https://github.com/Epinova/Epinova.Infrastructure</RepositoryUrl>
-    <DebugType>pdbonly</DebugType>
   </PropertyGroup>
 
   <ItemGroup>
