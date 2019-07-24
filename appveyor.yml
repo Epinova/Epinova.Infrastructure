@@ -7,6 +7,7 @@ environment:
   sonarcloudproj: Epinova.Infrastructure
   sonarcloudkey:
     secure: 0VvcxYCPLglmyB87e5B1vRk0nHq8KUX0ND/qLkCs1RaGULzo1Q+XPHOZgioTbEPZ
+  testFilter: Category!=Integration&Category!=Manual
 init:
 - cmd: nuget sources add -Name Episerver -Source http://nuget.episerver.com/feed/packages.svc/
 dotnet_csproj:
@@ -32,7 +33,7 @@ build:
   publish_nuget: true
   verbosity: minimal
 test_script:
-- cmd: IF DEFINED sonarcloudkey (OpenCover.Console.exe -register:user -target:dotnet.exe -targetargs:"test --no-build -c %configuration% -l \"trx;LogFileName=%APPVEYOR_BUILD_FOLDER%\test.results.xml\" --filter Category!=Integration&Category!=Manual" -output:%APPVEYOR_BUILD_FOLDER%\opencover.results.xml -coverbytest:*Tests.dll -oldStyle) ELSE (dotnet test)
+- cmd: IF DEFINED sonarcloudkey (OpenCover.Console.exe -register:user -target:dotnet.exe -targetargs:"test --no-build -c %configuration% -l \"trx;LogFileName=%APPVEYOR_BUILD_FOLDER%\test.results.xml\" --filter %testFilter%" -output:%APPVEYOR_BUILD_FOLDER%\opencover.results.xml -coverbytest:*Tests.dll -oldStyle) ELSE (dotnet test --no-build -c %configuration% --filter %testFilter%)
 cache:
   - packages -> **\packages.config
 deploy:
