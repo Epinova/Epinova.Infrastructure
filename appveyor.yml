@@ -32,7 +32,7 @@ build:
   publish_nuget: true
   verbosity: minimal
 test_script:
-- cmd: 'OpenCover.Console.exe -register:user -target:"%xunit20%\xunit.console.exe" -targetargs:"tests\bin\%configuration%\%targetFramework%\Epinova.InfrastructureTests.dll -noshadow -xml xunit.test.results.xml -appveyor" -output:%APPVEYOR_BUILD_FOLDER%\xunit.opencover.results.xml -coverbytest:*Tests.dll'
+- cmd: 'OpenCover.Console.exe -register:user -target:"%xunit20%\xunit.console.exe" -targetargs:"tests\bin\%configuration%\%targetFramework%\Epinova.InfrastructureTests.dll -noshadow -xml xunit.test.results.xml -appveyor -notrait Category=Integration -notrait Category=Manual" -output:%APPVEYOR_BUILD_FOLDER%\xunit.opencover.results.xml -coverbytest:*Tests.dll'
 cache:
   - packages -> **\packages.config
 deploy:
