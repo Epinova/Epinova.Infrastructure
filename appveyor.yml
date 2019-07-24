@@ -31,6 +31,11 @@ pull_requests:
 build:
   publish_nuget: true
   verbosity: minimal
+test:
+  categories:
+    except:
+    - Integration
+    - Manual
 test_script:
 - cmd: 'OpenCover.Console.exe -register:user -target:"%xunit20%\xunit.console.exe" -targetargs:"tests\bin\%configuration%\%targetFramework%\Epinova.InfrastructureTests.dll -noshadow -xml xunit.test.results.xml -appveyor -notrait Category=Integration -notrait Category=Manual" -output:%APPVEYOR_BUILD_FOLDER%\xunit.opencover.results.xml -coverbytest:*Tests.dll'
 cache:
