@@ -46,11 +46,22 @@ namespace Epinova.InfrastructureTests
         }
 
         [Fact]
+        public async Task Call_ResponseContentIsNull_ReturnsNull()
+        {
+            var message = new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = (StringContent) null };
+            Task<HttpResponseMessage> responseTask = Task.FromResult(message);
+
+            HttpResponseMessage result = await _service.CallAsync(() => responseTask);
+
+            Assert.Null(result);
+        }
+
+        [Fact]
         public async Task Call_ReturnsBadRequestStatusCode_LogWarning()
         {
             var message = new HttpResponseMessage { StatusCode = HttpStatusCode.BadRequest, Content = new StringContent(Factory.GetString()) };
-            Task<HttpResponseMessage> sss = Task.FromResult(message);
-            Func<Task<HttpResponseMessage>> work = () => sss;
+            Task<HttpResponseMessage> responseTask = Task.FromResult(message);
+            Func<Task<HttpResponseMessage>> work = () => responseTask;
             await _service.CallAsync(work);
 
             _logMock.VerifyLog(Level.Warning, $"Expected HTTP status code OK from {_service.GetType().Name} when fetching data. Actual: {message.StatusCode}. Method: {work.Method?.Name}.",
@@ -61,9 +72,9 @@ namespace Epinova.InfrastructureTests
         public async Task Call_ReturnsBadRequestStatusCode_ReturnsNull()
         {
             var message = new HttpResponseMessage { StatusCode = HttpStatusCode.BadRequest, Content = new StringContent(Factory.GetString()) };
-            Task<HttpResponseMessage> sss = Task.FromResult(message);
+            Task<HttpResponseMessage> responseTask = Task.FromResult(message);
 
-            HttpResponseMessage result = await _service.CallAsync(() => sss);
+            HttpResponseMessage result = await _service.CallAsync(() => responseTask);
 
             Assert.Null(result);
         }
@@ -75,22 +86,58 @@ namespace Epinova.InfrastructureTests
         public async Task Call_ReturnsOkStatusCodeWithContent_ReturnsMessage(HttpStatusCode statusCode)
         {
             var message = new HttpResponseMessage { StatusCode = statusCode, Content = new StringContent(Factory.GetString()) };
-            Task<HttpResponseMessage> sss = Task.FromResult(message);
+            Task<HttpResponseMessage> responseTask = Task.FromResult(message);
 
-            HttpResponseMessage result = await _service.CallAsync(() => sss);
+            HttpResponseMessage result = await _service.CallAsync(() => responseTask);
 
             Assert.Equal(message, result);
+        }
+
+        [Fact]
+        public async Task Call_Verbose_ResponseContentIsNull_ReturnsResponse()
+        {
+            var message = new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = (StringContent) null };
+            Task<HttpResponseMessage> responseTask = Task.FromResult(message);
+
+            HttpResponseMessage result = await _service.CallAsync(() => responseTask, true);
+
+            Assert.Same(message, result);
         }
 
         [Fact]
         public async Task Call_Verbose_ReturnsBadRequestStatusCode_ReturnsMessageWithContent()
         {
             var message = new HttpResponseMessage { StatusCode = HttpStatusCode.BadRequest, Content = new StringContent(Factory.GetString()) };
-            Task<HttpResponseMessage> sss = Task.FromResult(message);
+            Task<HttpResponseMessage> responseTask = Task.FromResult(message);
 
-            HttpResponseMessage result = await _service.CallAsync(() => sss, true);
+            HttpResponseMessage result = await _service.CallAsync(() => responseTask, true);
 
             Assert.Equal(message.Content, result.Content);
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public async Task Call_WorkUnitThrowsUp_LogsError(bool isVerbose)
+        {
+            Task<HttpResponseMessage> responseTask = Task.FromException<HttpResponseMessage>(new Exception("OMG!"));
+            Func<Task<HttpResponseMessage>> work = () => responseTask;
+
+            await _service.CallAsync(work, isVerbose);
+
+            _logMock.VerifyLog(Level.Error, $"{_service.GetType().Name} call failed horribly. Method: {work.Method?.Name}.", Times.Once());
+        }
+
+        [Theory]
+        [InlineData(true)]
+        [InlineData(false)]
+        public async Task Call_WorkUnitThrowsUp_ReturnsNull(bool isVerbose)
+        {
+            Task<HttpResponseMessage> responseTask = Task.FromException<HttpResponseMessage>(new Exception("OMG!"));
+
+            HttpResponseMessage result = await _service.CallAsync(() => responseTask, isVerbose);
+
+            Assert.Null(result);
         }
 
         [Fact]
