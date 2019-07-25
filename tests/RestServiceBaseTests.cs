@@ -48,7 +48,7 @@ namespace Epinova.InfrastructureTests
         [Fact]
         public async Task Call_ResponseContentIsNull_ReturnsNull()
         {
-            var message = new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = (StringContent) null };
+            var message = new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = null };
             Task<HttpResponseMessage> responseTask = Task.FromResult(message);
 
             HttpResponseMessage result = await _service.CallAsync(() => responseTask);
@@ -96,7 +96,7 @@ namespace Epinova.InfrastructureTests
         [Fact]
         public async Task Call_Verbose_ResponseContentIsNull_ReturnsResponse()
         {
-            var message = new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = (StringContent) null };
+            var message = new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = null };
             Task<HttpResponseMessage> responseTask = Task.FromResult(message);
 
             HttpResponseMessage result = await _service.CallAsync(() => responseTask, true);
