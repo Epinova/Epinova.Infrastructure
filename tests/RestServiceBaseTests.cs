@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
@@ -13,12 +14,47 @@ namespace Epinova.InfrastructureTests
     public class RestServiceBaseTests
     {
         private readonly Mock<ILogger> _logMock;
-        private readonly RestServiceBase _service;
+        private readonly TestableRestService _service;
 
         public RestServiceBaseTests()
         {
             _logMock = new Mock<ILogger>();
             _service = new TestableRestService(_logMock.Object);
+        }
+
+        [Fact]
+        public void BuildQueryString_PassingEmptyDictionary_ReturnsEmptyString()
+        {
+            string result = _service.BuildQueryStringExposed(new Dictionary<string, string>());
+            Assert.Empty(result);
+        }
+
+        [Fact]
+        public void BuildQueryString_PassingNull_ReturnsNull()
+        {
+            string result = _service.BuildQueryStringExposed(null);
+            Assert.Null(result);
+        }
+
+        [Fact]
+        public void BuildQueryString_PassingSomeDictionaryEntries_ReturnsConcatenatedDictionary()
+        {
+            var input = new Dictionary<string, string> { { "key1", "value1" }, { "key2", "value2" }, { "key3", "value3" } };
+
+            string result = _service.BuildQueryStringExposed(input);
+            Assert.Equal("key1=value1&key2=value2&key3=value3", result);
+        }
+
+        [Fact]
+        public async Task Call_ReturnsBadRequestStatusCode_LogWarning()
+        {
+            var message = new HttpResponseMessage { StatusCode = HttpStatusCode.BadRequest, Content = new StringContent(Factory.GetString()) };
+            Task<HttpResponseMessage> sss = Task.FromResult(message);
+            Func<Task<HttpResponseMessage>> work = () => sss;
+            await _service.CallAsync(work);
+
+            _logMock.VerifyLog(Level.Warning, $"Expected HTTP status code OK from {_service.GetType().Name} when fetching data. Actual: {message.StatusCode}. Method: {work.Method?.Name}.",
+                Times.Once());
         }
 
         [Fact]
@@ -30,17 +66,6 @@ namespace Epinova.InfrastructureTests
             HttpResponseMessage result = await _service.CallAsync(() => sss);
 
             Assert.Null(result);
-        }
-
-        [Fact]
-        public async Task Call_ReturnsBadRequestStatusCode_LogWarning()
-        {
-            var message = new HttpResponseMessage { StatusCode = HttpStatusCode.BadRequest, Content = new StringContent(Factory.GetString()) };
-            Task<HttpResponseMessage> sss = Task.FromResult(message);
-            Func<Task<HttpResponseMessage>>  work = () => sss;
-            await _service.CallAsync(work);
-
-            _logMock.VerifyLog(Level.Warning, $"Expected HTTP status code OK from {_service.GetType().Name} when fetching data. Actual: {message.StatusCode}. Method: {work.Method?.Name}.", Times.Once());
         }
 
         [Theory]
@@ -214,6 +239,11 @@ namespace Epinova.InfrastructureTests
         {
             public TestableRestService(ILogger log) : base(log)
             {
+            }
+
+            public string BuildQueryStringExposed(IDictionary<string, string> nameValueCollection)
+            {
+                return BuildQueryString(nameValueCollection);
             }
         }
 
