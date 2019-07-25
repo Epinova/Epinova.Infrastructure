@@ -34,8 +34,6 @@ build:
   verbosity: minimal
 test_script:
 - cmd: IF DEFINED sonarcloudkey (OpenCover.Console.exe -register:user -target:dotnet.exe -targetargs:"test --no-build -c %configuration% -l \"trx;LogFileName=%APPVEYOR_BUILD_FOLDER%\test.results.xml\" --filter %testFilter%" -output:%APPVEYOR_BUILD_FOLDER%\opencover.results.xml -coverbytest:*Tests.dll -oldStyle) ELSE (dotnet test --no-build -c %configuration% --filter %testFilter%)
-#cache:
-#  - packages -> **\packages.config
 deploy:
   provider: NuGet
   api_key:
