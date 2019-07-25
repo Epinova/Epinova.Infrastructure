@@ -19,6 +19,12 @@ namespace Epinova.Infrastructure
             _log = log;
         }
 
+        [Obsolete("Use CallAsync instead", true)]
+        public async Task<HttpResponseMessage> Call(Func<Task<HttpResponseMessage>> work, bool isVerbose = false)
+        {
+            return await CallAsync(work, isVerbose);
+        }
+
         /// <summary>
         /// Safely call API method with the provided work. Exceptions are catched and logged. Response message
         /// is returned if the HTTP status code is greater than (including) 200 and 299
@@ -52,6 +58,18 @@ namespace Epinova.Infrastructure
             }
 
             return response;
+        }
+
+        [Obsolete("Use ParseJsonAsync instead", true)]
+        public async Task<T> ParseJson<T>(HttpResponseMessage response) where T : IServiceResponseMessage, new()
+        {
+            return await ParseJsonAsync<T>(response);
+        }
+
+        [Obsolete("Use ParseJsonArrayAsync instead", true)]
+        public async Task<T[]> ParseJsonArray<T>(HttpResponseMessage response) where T : IServiceResponseMessage, new()
+        {
+            return await ParseJsonArrayAsync<T>(response);
         }
 
         /// <summary>
@@ -92,6 +110,12 @@ namespace Epinova.Infrastructure
                 _log.Error("Deserializing json failed.", ex);
                 return CreateErrorResult<T>("Deserializing json failed");
             }
+        }
+
+        [Obsolete("Use ParseXmlAsync instead", true)]
+        public async Task<T> ParseXml<T>(HttpResponseMessage response) where T : IServiceResponseMessage, new()
+        {
+            return await ParseXmlAsync<T>(response);
         }
 
         /// <summary>
