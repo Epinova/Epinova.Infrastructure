@@ -25,14 +25,14 @@ namespace Epinova.InfrastructureTests
         [Fact]
         public void BuildQueryString_PassingEmptyDictionary_ReturnsEmptyString()
         {
-            string result = _service.BuildQueryStringExposed(new Dictionary<string, string>());
+            string result = TestableRestService.BuildQueryStringExposed(new Dictionary<string, string>());
             Assert.Empty(result);
         }
 
         [Fact]
         public void BuildQueryString_PassingNull_ReturnsNull()
         {
-            string result = _service.BuildQueryStringExposed(null);
+            string result = TestableRestService.BuildQueryStringExposed(null);
             Assert.Null(result);
         }
 
@@ -41,7 +41,7 @@ namespace Epinova.InfrastructureTests
         {
             var input = new Dictionary<string, string> { { "key1", "value1" }, { "key2", "value2" }, { "key3", "value3" } };
 
-            string result = _service.BuildQueryStringExposed(input);
+            string result = TestableRestService.BuildQueryStringExposed(input);
             Assert.Equal("key1=value1&key2=value2&key3=value3", result);
         }
 
@@ -288,7 +288,7 @@ namespace Epinova.InfrastructureTests
             {
             }
 
-            public string BuildQueryStringExposed(IDictionary<string, string> nameValueCollection)
+            public static string BuildQueryStringExposed(IDictionary<string, string> nameValueCollection)
             {
                 return BuildQueryString(nameValueCollection);
             }

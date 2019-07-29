@@ -150,7 +150,7 @@ namespace Epinova.Infrastructure
         /// <summary>
         /// Convert a dictionary to a query string parameter list
         /// </summary>
-        protected string BuildQueryString(IDictionary<string, string> nameValueCollection)
+        protected static string BuildQueryString(IDictionary<string, string> nameValueCollection)
         {
             return nameValueCollection == null ? null : String.Join("&", nameValueCollection.Select(pair => $"{pair.Key}={pair.Value}"));
         }
