@@ -51,7 +51,7 @@ namespace Epinova.Infrastructure.Logging
             Func<TState, TException, object> messageFormatter)
             where TException : Exception
         {
-            logger.Log(Level.Critical, state, exception, (x, y) => GetMessage(messageFormatter(x, y)), typeof (LoggerExtensions));
+            logger.Log(Level.Critical, state, exception, (x, y) => GetMessage(messageFormatter(x, y)), typeof(LoggerExtensions));
         }
 
 
@@ -97,7 +97,7 @@ namespace Epinova.Infrastructure.Logging
             Func<TState, TException, object> messageFormatter)
             where TException : Exception
         {
-            logger.Log(Level.Debug, state, exception, (x, y) => GetMessage(messageFormatter(x, y)), typeof (LoggerExtensions));
+            logger.Log(Level.Debug, state, exception, (x, y) => GetMessage(messageFormatter(x, y)), typeof(LoggerExtensions));
         }
 
         public static void Error(this ILogger instance, object message)
@@ -110,6 +110,7 @@ namespace Epinova.Infrastructure.Logging
         {
             instance.Error(message, exception, GetMessage);
         }
+
         /// <summary>
         /// Logs a message at the Error level using the supplied formatter and state.
         /// </summary>
@@ -141,7 +142,7 @@ namespace Epinova.Infrastructure.Logging
             Func<TState, TException, object> messageFormatter)
             where TException : Exception
         {
-            logger.Log(Level.Error, state, exception, (x, y) => GetMessage(messageFormatter(x, y)), typeof (LoggerExtensions));
+            logger.Log(Level.Error, state, exception, (x, y) => GetMessage(messageFormatter(x, y)), typeof(LoggerExtensions));
         }
 
         public static void Information(this ILogger instance, object message)
@@ -154,6 +155,7 @@ namespace Epinova.Infrastructure.Logging
         {
             instance.Information(message, exception, GetMessage);
         }
+
         /// <summary>
         /// Logs a message at the Information level using the supplied formatter and state.
         /// </summary>
@@ -185,7 +187,7 @@ namespace Epinova.Infrastructure.Logging
             Func<TState, TException, object> messageFormatter)
             where TException : Exception
         {
-            logger.Log(Level.Information, state, exception, (x, y) => GetMessage(messageFormatter(x, y)), typeof (LoggerExtensions));
+            logger.Log(Level.Information, state, exception, (x, y) => GetMessage(messageFormatter(x, y)), typeof(LoggerExtensions));
         }
 
         public static void Trace(this ILogger instance, object message)
@@ -230,7 +232,7 @@ namespace Epinova.Infrastructure.Logging
             Func<TState, TException, object> messageFormatter)
             where TException : Exception
         {
-            logger.Log(Level.Trace, state, exception, (x, y) => GetMessage(messageFormatter(x, y)), typeof (LoggerExtensions));
+            logger.Log(Level.Trace, state, exception, (x, y) => GetMessage(messageFormatter(x, y)), typeof(LoggerExtensions));
         }
 
 
@@ -244,6 +246,7 @@ namespace Epinova.Infrastructure.Logging
         {
             instance.Warning(message, exception, GetMessage);
         }
+
         /// <summary>
         /// Logs a message at the Warning level using the supplied formatter and state.
         /// </summary>
@@ -275,7 +278,7 @@ namespace Epinova.Infrastructure.Logging
             Func<TState, TException, object> messageFormatter)
             where TException : Exception
         {
-            logger.Log(Level.Warning, state, exception, (x, y) => GetMessage(messageFormatter(x, y)), typeof (LoggerExtensions));
+            logger.Log(Level.Warning, state, exception, (x, y) => GetMessage(messageFormatter(x, y)), typeof(LoggerExtensions));
         }
 
         internal static string GetMessage(object message, Exception exception)

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using EPiServer.Logging;
+using Moq;
 using Xunit;
 using LoggerExtensions = Epinova.Infrastructure.Logging.LoggerExtensions;
 
@@ -86,6 +87,16 @@ namespace Epinova.InfrastructureTests.Logging
 
             LoggerExtensions.Trace(logger, new { message = "Hello", number });
             Assert.Equal($"TRACE: {{\"message\":\"Hello\",\"number\":{number}}}", logger.Messages.First());
+        }
+
+        [Fact]
+        public void Trace_LogAnonymousObjectOnEnabledLevel_VerifyLog()
+        {
+            var logMock = new Mock<ILogger>();
+            int number = Factory.GetInteger();
+
+            LoggerExtensions.Trace(logMock.Object, new { message = "Hello", number });
+            logMock.VerifyLog<object>(Level.Trace, Times.Once());
         }
     }
 }
