@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Text;
 using Epinova.Infrastructure.Logging;
 using Moq;
@@ -29,6 +30,22 @@ namespace Epinova.InfrastructureTests.Logging
 
             bool result = converter.CanConvert(obj.GetType());
             Assert.True(result);
+        }
+
+        [Fact]
+        public void CanRead_Overrides_ReturnsFalse()
+        {
+            var converter = new CustomMessageConverter();
+
+            Assert.False(converter.CanRead);
+        }
+
+        [Fact]
+        public void ReadJson_AnyParameters_NotImplemented()
+        {
+            var converter = new CustomMessageConverter();
+
+            Assert.Throws<NotImplementedException>(() => converter.ReadJson(null, null, null, null));
         }
 
         [Fact]
