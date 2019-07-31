@@ -20,6 +20,40 @@ namespace Epinova.Infrastructure.Logging
             instance.Critical(message, exception, GetMessage);
         }
 
+        /// <summary>
+        /// Logs a message at the Critical level using the supplied formatter and state.
+        /// </summary>
+        /// <typeparam name="TState">The type of the state object that should be passed to the formatter method.</typeparam>
+        /// <param name="logger">The logger.</param>
+        /// <param name="state">A state object to pass to the message formatter.</param>
+        /// <param name="messageFormatter">A message formatter that will be called when formatting the log message.</param>
+        public static void Critical<TState>(
+            this ILogger logger,
+            TState state,
+            Func<TState, object> messageFormatter)
+        {
+            logger.Log(Level.Critical, state, x => GetMessage(messageFormatter(x)));
+        }
+
+        /// <summary>
+        /// Logs a message and exception at the Critical level using the supplied formatter and state.
+        /// </summary>
+        /// <typeparam name="TState">The type of the state object that should be passed to the formatter method.</typeparam>
+        /// <typeparam name="TException">The type of the exception that is being logged.</typeparam>
+        /// <param name="logger">The logger.</param>
+        /// <param name="state">A state object to pass to the message formatter.</param>
+        /// <param name="exception">The exception that should be logged.</param>
+        /// <param name="messageFormatter">A message formatter that will be called when formatting the log message.</param>
+        public static void Critical<TState, TException>(
+            this ILogger logger,
+            TState state,
+            TException exception,
+            Func<TState, TException, object> messageFormatter)
+            where TException : Exception
+        {
+            logger.Log(Level.Critical, state, exception, (x, y) => GetMessage(messageFormatter(x, y)), typeof (LoggerExtensions));
+        }
+
 
         public static void Debug(this ILogger instance, object message)
         {
@@ -32,6 +66,39 @@ namespace Epinova.Infrastructure.Logging
             instance.Debug(message, exception, GetMessage);
         }
 
+        /// <summary>
+        /// Logs a message at the Debug level using the supplied formatter and state.
+        /// </summary>
+        /// <typeparam name="TState">The type of the state object that should be passed to the formatter method.</typeparam>
+        /// <param name="logger">The logger.</param>
+        /// <param name="state">A state object to pass to the message formatter.</param>
+        /// <param name="messageFormatter">A message formatter that will be called when formatting the log message.</param>
+        public static void Debug<TState>(
+            this ILogger logger,
+            TState state,
+            Func<TState, object> messageFormatter)
+        {
+            logger.Log(Level.Debug, state, x => GetMessage(messageFormatter(x)));
+        }
+
+        /// <summary>
+        /// Logs a message and exception at the Debug level using the supplied formatter and state.
+        /// </summary>
+        /// <typeparam name="TState">The type of the state object that should be passed to the formatter method.</typeparam>
+        /// <typeparam name="TException">The type of the exception that is being logged.</typeparam>
+        /// <param name="logger">The logger.</param>
+        /// <param name="state">A state object to pass to the message formatter.</param>
+        /// <param name="exception">The exception that should be logged.</param>
+        /// <param name="messageFormatter">A message formatter that will be called when formatting the log message.</param>
+        public static void Debug<TState, TException>(
+            this ILogger logger,
+            TState state,
+            TException exception,
+            Func<TState, TException, object> messageFormatter)
+            where TException : Exception
+        {
+            logger.Log(Level.Debug, state, exception, (x, y) => GetMessage(messageFormatter(x, y)), typeof (LoggerExtensions));
+        }
 
         public static void Error(this ILogger instance, object message)
         {
@@ -43,7 +110,39 @@ namespace Epinova.Infrastructure.Logging
         {
             instance.Error(message, exception, GetMessage);
         }
+        /// <summary>
+        /// Logs a message at the Error level using the supplied formatter and state.
+        /// </summary>
+        /// <typeparam name="TState">The type of the state object that should be passed to the formatter method.</typeparam>
+        /// <param name="logger">The logger.</param>
+        /// <param name="state">A state object to pass to the message formatter.</param>
+        /// <param name="messageFormatter">A message formatter that will be called when formatting the log message.</param>
+        public static void Error<TState>(
+            this ILogger logger,
+            TState state,
+            Func<TState, object> messageFormatter)
+        {
+            logger.Log(Level.Error, state, x => GetMessage(messageFormatter(x)));
+        }
 
+        /// <summary>
+        /// Logs a message and exception at the Error level using the supplied formatter and state.
+        /// </summary>
+        /// <typeparam name="TState">The type of the state object that should be passed to the formatter method.</typeparam>
+        /// <typeparam name="TException">The type of the exception that is being logged.</typeparam>
+        /// <param name="logger">The logger.</param>
+        /// <param name="state">A state object to pass to the message formatter.</param>
+        /// <param name="exception">The exception that should be logged.</param>
+        /// <param name="messageFormatter">A message formatter that will be called when formatting the log message.</param>
+        public static void Error<TState, TException>(
+            this ILogger logger,
+            TState state,
+            TException exception,
+            Func<TState, TException, object> messageFormatter)
+            where TException : Exception
+        {
+            logger.Log(Level.Error, state, exception, (x, y) => GetMessage(messageFormatter(x, y)), typeof (LoggerExtensions));
+        }
 
         public static void Information(this ILogger instance, object message)
         {
@@ -55,7 +154,39 @@ namespace Epinova.Infrastructure.Logging
         {
             instance.Information(message, exception, GetMessage);
         }
+        /// <summary>
+        /// Logs a message at the Information level using the supplied formatter and state.
+        /// </summary>
+        /// <typeparam name="TState">The type of the state object that should be passed to the formatter method.</typeparam>
+        /// <param name="logger">The logger.</param>
+        /// <param name="state">A state object to pass to the message formatter.</param>
+        /// <param name="messageFormatter">A message formatter that will be called when formatting the log message.</param>
+        public static void Information<TState>(
+            this ILogger logger,
+            TState state,
+            Func<TState, object> messageFormatter)
+        {
+            logger.Log(Level.Information, state, x => GetMessage(messageFormatter(x)));
+        }
 
+        /// <summary>
+        /// Logs a message and exception at the Information level using the supplied formatter and state.
+        /// </summary>
+        /// <typeparam name="TState">The type of the state object that should be passed to the formatter method.</typeparam>
+        /// <typeparam name="TException">The type of the exception that is being logged.</typeparam>
+        /// <param name="logger">The logger.</param>
+        /// <param name="state">A state object to pass to the message formatter.</param>
+        /// <param name="exception">The exception that should be logged.</param>
+        /// <param name="messageFormatter">A message formatter that will be called when formatting the log message.</param>
+        public static void Information<TState, TException>(
+            this ILogger logger,
+            TState state,
+            TException exception,
+            Func<TState, TException, object> messageFormatter)
+            where TException : Exception
+        {
+            logger.Log(Level.Information, state, exception, (x, y) => GetMessage(messageFormatter(x, y)), typeof (LoggerExtensions));
+        }
 
         public static void Trace(this ILogger instance, object message)
         {
@@ -66,6 +197,40 @@ namespace Epinova.Infrastructure.Logging
         public static void Trace(this ILogger instance, object message, Exception exception)
         {
             instance.Trace(message, exception, GetMessage);
+        }
+
+        /// <summary>
+        /// Logs a message at the Trace level using the supplied formatter and state.
+        /// </summary>
+        /// <typeparam name="TState">The type of the state object that should be passed to the formatter method.</typeparam>
+        /// <param name="logger">The logger.</param>
+        /// <param name="state">A state object to pass to the message formatter.</param>
+        /// <param name="messageFormatter">A message formatter that will be called when formatting the log message.</param>
+        public static void Trace<TState>(
+            this ILogger logger,
+            TState state,
+            Func<TState, object> messageFormatter)
+        {
+            logger.Log(Level.Trace, state, x => GetMessage(messageFormatter(x)));
+        }
+
+        /// <summary>
+        /// Logs a message and exception at the Trace level using the supplied formatter and state.
+        /// </summary>
+        /// <typeparam name="TState">The type of the state object that should be passed to the formatter method.</typeparam>
+        /// <typeparam name="TException">The type of the exception that is being logged.</typeparam>
+        /// <param name="logger">The logger.</param>
+        /// <param name="state">A state object to pass to the message formatter.</param>
+        /// <param name="exception">The exception that should be logged.</param>
+        /// <param name="messageFormatter">A message formatter that will be called when formatting the log message.</param>
+        public static void Trace<TState, TException>(
+            this ILogger logger,
+            TState state,
+            TException exception,
+            Func<TState, TException, object> messageFormatter)
+            where TException : Exception
+        {
+            logger.Log(Level.Trace, state, exception, (x, y) => GetMessage(messageFormatter(x, y)), typeof (LoggerExtensions));
         }
 
 
@@ -79,7 +244,39 @@ namespace Epinova.Infrastructure.Logging
         {
             instance.Warning(message, exception, GetMessage);
         }
+        /// <summary>
+        /// Logs a message at the Warning level using the supplied formatter and state.
+        /// </summary>
+        /// <typeparam name="TState">The type of the state object that should be passed to the formatter method.</typeparam>
+        /// <param name="logger">The logger.</param>
+        /// <param name="state">A state object to pass to the message formatter.</param>
+        /// <param name="messageFormatter">A message formatter that will be called when formatting the log message.</param>
+        public static void Warning<TState>(
+            this ILogger logger,
+            TState state,
+            Func<TState, object> messageFormatter)
+        {
+            logger.Log(Level.Warning, state, x => GetMessage(messageFormatter(x)));
+        }
 
+        /// <summary>
+        /// Logs a message and exception at the Warning level using the supplied formatter and state.
+        /// </summary>
+        /// <typeparam name="TState">The type of the state object that should be passed to the formatter method.</typeparam>
+        /// <typeparam name="TException">The type of the exception that is being logged.</typeparam>
+        /// <param name="logger">The logger.</param>
+        /// <param name="state">A state object to pass to the message formatter.</param>
+        /// <param name="exception">The exception that should be logged.</param>
+        /// <param name="messageFormatter">A message formatter that will be called when formatting the log message.</param>
+        public static void Warning<TState, TException>(
+            this ILogger logger,
+            TState state,
+            TException exception,
+            Func<TState, TException, object> messageFormatter)
+            where TException : Exception
+        {
+            logger.Log(Level.Warning, state, exception, (x, y) => GetMessage(messageFormatter(x, y)), typeof (LoggerExtensions));
+        }
 
         internal static string GetMessage(object message, Exception exception)
         {

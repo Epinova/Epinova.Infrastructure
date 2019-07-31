@@ -1,10 +1,18 @@
 ﻿using Epinova.Infrastructure.Logging;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace Epinova.InfrastructureTests.Logging
 {
-    public class LoggerExtensionsTests
+    public partial class LoggerExtensionsTests
     {
+        private readonly ITestOutputHelper _output;
+
+        public LoggerExtensionsTests(ITestOutputHelper output)
+        {
+            _output = output;
+        }
+
         [Fact]
         public void GetMessage_ObjectHasPropertyXhtmlString_IgnoeresIt()
         {
@@ -39,6 +47,13 @@ namespace Epinova.InfrastructureTests.Logging
             string s1 = Factory.GetString();
             var candidate = new { StringProperty = s1, XhtmlStringProperty = new XhtmlString(Factory.GetString()) };
             LoggerExtensions.GetMessage(candidate);
+        }
+
+        [Fact]
+        public void GetMessage_ObjectIsNull_ReturnsNull()
+        {
+            string result = LoggerExtensions.GetMessage(null);
+            Assert.Null(result);
         }
 
         [Fact]
