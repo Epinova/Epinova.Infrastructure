@@ -195,6 +195,32 @@ namespace Epinova.InfrastructureTests
         }
 
         [Fact]
+        public async Task ParseJsonArray_InvalidJson_LogError()
+        {
+            string fooValue = Factory.GetString();
+            int barValue = Factory.GetInteger();
+            string payload = $"\"Foo\": \"{fooValue}\", \"Bar\": {barValue}";
+            var message = new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = new StringContent(payload) };
+
+            await _service.ParseJsonArrayAsync<TestablePayload>(message);
+
+            _logMock.VerifyLog(Level.Error, "Deserializing json array failed.", Times.Once());
+        }
+
+        [Fact]
+        public async Task ParseJsonArray_InvalidJson_ReturnsInstanceWithErrorMessage()
+        {
+            string fooValue = Factory.GetString();
+            int barValue = Factory.GetInteger();
+            string payload = $"\"Foo\": \"{fooValue}\", \"Bar\": {barValue}";
+            var message = new HttpResponseMessage { StatusCode = HttpStatusCode.OK, Content = new StringContent(payload) };
+
+            TestablePayload[] result = await _service.ParseJsonArrayAsync<TestablePayload>(message);
+
+            Assert.Equal("Deserializing json array failed", result[0].ErrorMessage);
+        }
+
+        [Fact]
         public async Task ParseJsonArray_ValidJson_ReturnsSerializedObject()
         {
             string fooValue1 = Factory.GetString();
