@@ -80,6 +80,17 @@ namespace Epinova.InfrastructureTests.Logging
         }
 
         [Fact]
+        public void Information_LogAnonymousObjectAndExceptionOnEnabledLevel_VerifyLog()
+        {
+            var logMock = new Mock<ILogger>();
+            int number = Factory.GetInteger();
+            var exception = new Exception("OMG!");
+
+            LoggerExtensions.Information(logMock.Object, new { message = "Hello", number }, exception);
+            logMock.VerifyLog<object, Exception>(Level.Information, exception, Times.Once());
+        }
+
+        [Fact]
         public void Information_LogAnonymousObjectOnEnabledLevel_LogsMessage()
         {
             var logger = new TestableLogger(Level.Information, _output);
