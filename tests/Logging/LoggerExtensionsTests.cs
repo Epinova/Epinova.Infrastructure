@@ -50,6 +50,13 @@ namespace Epinova.InfrastructureTests.Logging
         }
 
         [Fact]
+        public void GetMessage_ObjectIsNull_ReturnsNull()
+        {
+            string result = LoggerExtensions.GetMessage(null);
+            Assert.Null(result);
+        }
+
+        [Fact]
         public void GetMessage_ObjectIsString_ReturnsWithoutSerializingIt()
         {
             string candidate = Factory.GetString();
