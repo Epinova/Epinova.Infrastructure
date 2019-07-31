@@ -9,7 +9,7 @@ namespace Epinova.InfrastructureTests.Logging
     partial class LoggerExtensionsTests
     {
         [Fact]
-        public void Warning_LogAnonymousObjectAndExceptionOnDisabledLevel_DoesNotCallMessageFormatter()
+        public void Warning_LazyLogAnonymousObjectAndExceptionOnDisabledLevel_DoesNotCallMessageFormatter()
         {
             var isInvoked = false;
             var logger = new TestableLogger(Level.Error, _output);
@@ -24,7 +24,7 @@ namespace Epinova.InfrastructureTests.Logging
         }
 
         [Fact]
-        public void Warning_LogAnonymousObjectAndExceptionOnEnabledLevel_CallMessageFormatter()
+        public void Warning_LazyLogAnonymousObjectAndExceptionOnEnabledLevel_CallMessageFormatter()
         {
             var isInvoked = false;
             var logger = new TestableLogger(Level.Warning, _output);
@@ -39,7 +39,7 @@ namespace Epinova.InfrastructureTests.Logging
         }
 
         [Fact]
-        public void Warning_LogAnonymousObjectOnDisabledLevel_DoesNotCallMessageFormatter()
+        public void Warning_LazyLogAnonymousObjectOnDisabledLevel_DoesNotCallMessageFormatter()
         {
             var isInvoked = false;
             var logger = new TestableLogger(Level.Error, _output);
@@ -54,7 +54,7 @@ namespace Epinova.InfrastructureTests.Logging
         }
 
         [Fact]
-        public void Warning_LogAnonymousObjectOnEnabledLevel_CallMessageFormatter()
+        public void Warning_LazyLogAnonymousObjectOnEnabledLevel_CallMessageFormatter()
         {
             var isInvoked = false;
             var logger = new TestableLogger(Level.Warning, _output);
@@ -69,13 +69,23 @@ namespace Epinova.InfrastructureTests.Logging
         }
 
         [Fact]
-        public void Warning_LogAnonymousObjectOnEnabledLevel_LogsMessage()
+        public void Warning_LazyLogAnonymousObjectOnEnabledLevel_LogsMessage()
         {
             var logger = new TestableLogger(Level.Warning, _output);
             int state = Factory.GetInteger();
 
             LoggerExtensions.Warning(logger, state, number => new { message = "Hello", number });
             Assert.Equal($"WARNING: {{\"message\":\"Hello\",\"number\":{state}}}", logger.Messages.First());
+        }
+
+        [Fact]
+        public void Warning_LogAnonymousObjectOnEnabledLevel_LogsMessage()
+        {
+            var logger = new TestableLogger(Level.Warning, _output);
+            int number = Factory.GetInteger();
+
+            LoggerExtensions.Warning(logger, new { message = "Hello", number });
+            Assert.Equal($"WARNING: {{\"message\":\"Hello\",\"number\":{number}}}", logger.Messages.First());
         }
     }
 }

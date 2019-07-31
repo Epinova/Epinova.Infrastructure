@@ -9,7 +9,7 @@ namespace Epinova.InfrastructureTests.Logging
     partial class LoggerExtensionsTests
     {
         [Fact]
-        public void Error_LogAnonymousObjectAndExceptionOnDisabledLevel_DoesNotCallMessageFormatter()
+        public void Error_LazyLogAnonymousObjectAndExceptionOnDisabledLevel_DoesNotCallMessageFormatter()
         {
             var isInvoked = false;
             var logger = new TestableLogger(Level.Critical, _output);
@@ -24,7 +24,7 @@ namespace Epinova.InfrastructureTests.Logging
         }
 
         [Fact]
-        public void Error_LogAnonymousObjectAndExceptionOnEnabledLevel_CallMessageFormatter()
+        public void Error_LazyLogAnonymousObjectAndExceptionOnEnabledLevel_CallMessageFormatter()
         {
             var isInvoked = false;
             var logger = new TestableLogger(Level.Error, _output);
@@ -39,7 +39,7 @@ namespace Epinova.InfrastructureTests.Logging
         }
 
         [Fact]
-        public void Error_LogAnonymousObjectOnDisabledLevel_DoesNotCallMessageFormatter()
+        public void Error_LazyLogAnonymousObjectOnDisabledLevel_DoesNotCallMessageFormatter()
         {
             var isInvoked = false;
             var logger = new TestableLogger(Level.Critical, _output);
@@ -54,7 +54,7 @@ namespace Epinova.InfrastructureTests.Logging
         }
 
         [Fact]
-        public void Error_LogAnonymousObjectOnEnabledLevel_CallMessageFormatter()
+        public void Error_LazyLogAnonymousObjectOnEnabledLevel_CallMessageFormatter()
         {
             var isInvoked = false;
             var logger = new TestableLogger(Level.Error, _output);
@@ -69,13 +69,23 @@ namespace Epinova.InfrastructureTests.Logging
         }
 
         [Fact]
-        public void Error_LogAnonymousObjectOnEnabledLevel_LogsMessage()
+        public void Error_LazyLogAnonymousObjectOnEnabledLevel_LogsMessage()
         {
             var logger = new TestableLogger(Level.Error, _output);
             int state = Factory.GetInteger();
 
             LoggerExtensions.Error(logger, state, number => new { message = "Hello", number });
             Assert.Equal($"ERROR: {{\"message\":\"Hello\",\"number\":{state}}}", logger.Messages.First());
+        }
+
+        [Fact]
+        public void Error_LogAnonymousObjectOnEnabledLevel_LogsMessage()
+        {
+            var logger = new TestableLogger(Level.Error, _output);
+            int number = Factory.GetInteger();
+
+            LoggerExtensions.Error(logger, new { message = "Hello", number });
+            Assert.Equal($"ERROR: {{\"message\":\"Hello\",\"number\":{number}}}", logger.Messages.First());
         }
     }
 }
