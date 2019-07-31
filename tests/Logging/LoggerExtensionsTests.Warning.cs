@@ -1,0 +1,81 @@
+﻿using System;
+using System.Linq;
+using EPiServer.Logging;
+using Xunit;
+using LoggerExtensions = Epinova.Infrastructure.Logging.LoggerExtensions;
+
+namespace Epinova.InfrastructureTests.Logging
+{
+    partial class LoggerExtensionsTests
+    {
+        [Fact]
+        public void Warning_LogAnonymousObjectAndExceptionOnDisabledLevel_DoesNotCallMessageFormatter()
+        {
+            var isInvoked = false;
+            var logger = new TestableLogger(Level.Error, _output);
+            int state = Factory.GetInteger();
+
+            LoggerExtensions.Warning(logger, state, new Exception("OMG!"), (number, ex) =>
+            {
+                isInvoked = true;
+                return new { message = "Hello", number };
+            });
+            Assert.False(isInvoked);
+        }
+
+        [Fact]
+        public void Warning_LogAnonymousObjectAndExceptionOnEnabledLevel_CallMessageFormatter()
+        {
+            var isInvoked = false;
+            var logger = new TestableLogger(Level.Warning, _output);
+            int state = Factory.GetInteger();
+
+            LoggerExtensions.Warning(logger, state, new Exception("OMG!"), (number, ex) =>
+            {
+                isInvoked = true;
+                return new { message = "Hello", number };
+            });
+            Assert.True(isInvoked);
+        }
+
+        [Fact]
+        public void Warning_LogAnonymousObjectOnDisabledLevel_DoesNotCallMessageFormatter()
+        {
+            var isInvoked = false;
+            var logger = new TestableLogger(Level.Error, _output);
+            int state = Factory.GetInteger();
+
+            LoggerExtensions.Warning(logger, state, number =>
+            {
+                isInvoked = true;
+                return new { message = "Hello", number };
+            });
+            Assert.False(isInvoked);
+        }
+
+        [Fact]
+        public void Warning_LogAnonymousObjectOnEnabledLevel_CallMessageFormatter()
+        {
+            var isInvoked = false;
+            var logger = new TestableLogger(Level.Warning, _output);
+            int state = Factory.GetInteger();
+
+            LoggerExtensions.Warning(logger, state, number =>
+            {
+                isInvoked = true;
+                return new { message = "Hello", number };
+            });
+            Assert.True(isInvoked);
+        }
+
+        [Fact]
+        public void Warning_LogAnonymousObjectOnEnabledLevel_LogsMessage()
+        {
+            var logger = new TestableLogger(Level.Warning, _output);
+            int state = Factory.GetInteger();
+
+            LoggerExtensions.Warning(logger, state, number => new { message = "Hello", number });
+            Assert.Equal($"WARNING: {{\"message\":\"Hello\",\"number\":{state}}}", logger.Messages.First());
+        }
+    }
+}
