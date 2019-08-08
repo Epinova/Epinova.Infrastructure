@@ -8,6 +8,9 @@ namespace Epinova.Infrastructure
     /// Helper class to run async methods within a sync process. Use only when you _really_ cannot
     /// use the await keyword or use a proper synchronous method.
     /// </summary>
+    /// <remarks>
+    /// Credits to https://cpratt.co/async-tips-tricks/
+    /// </remarks>
     public static class AsyncHelper
     {
         private static readonly TaskFactory TaskFactory = new
