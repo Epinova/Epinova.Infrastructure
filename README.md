@@ -87,6 +87,18 @@ public class AwesomeService : RestServiceBase
 }
 ```
 
+### Epinova.Infrastructure.AsyncHelper
+
+Helper class to run async methods within a sync process. Use only when you _really_ cannot use the await keyword or use a proper synchronous method.
+
+```csharp
+AsyncHelper.RunSync(() => DoSomethingAwesoneAsync());
+```
+
+The `RunSync` method also has an overload for returning stuff from async methods.
+
+Credits to https://cpratt.co/async-tips-tricks/
+
 ### Prerequisites
 
 This module depends on EPiServer.Framework >= v11.1 for logging purposes. No setup or init code required.
