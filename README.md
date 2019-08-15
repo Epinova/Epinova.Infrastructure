@@ -64,9 +64,9 @@ public class AwesomeService : RestServiceBase
 
     public async Task<Bar> CreateStuff(Foo payload)
     {
-	    var responseMessage = await CallAsync(() => Client.PostAsync("api/method", new StringContent("serialized version og Foo")));
-		//Even simpler, if using in combination with Microsoft.AspNet.WebApi.Client:
-	    var responseMessage = await CallAsync(() => Client.PostAsync<Foo>("api/method", payload, new JsonMediaTypeFormatter()));
+      var responseMessage = await CallAsync(() => Client.PostAsync("api/method", new StringContent("serialized version og Foo")));
+      //Even simpler, if using in combination with Microsoft.AspNet.WebApi.Client:
+      var responseMessage = await CallAsync(() => Client.PostAsync<Foo>("api/method", payload, new JsonMediaTypeFormatter()));
 
         if (responseMessage == null || !responseMessage.IsSuccessStatusCode)
         {
