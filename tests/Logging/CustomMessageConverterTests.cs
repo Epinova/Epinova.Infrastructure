@@ -63,8 +63,6 @@ namespace Epinova.InfrastructureTests.Logging
             Assert.Equal("\"loggable string\"", stringBuilder.ToString());
         }
 
-        #region Nested type: SomeModel
-
         private class SomeModel : ICustomLogMessage
         {
             public string ToLoggableString()
@@ -72,7 +70,5 @@ namespace Epinova.InfrastructureTests.Logging
                 return "loggable string";
             }
         }
-
-        #endregion
     }
 }

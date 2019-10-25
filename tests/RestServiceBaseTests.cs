@@ -293,8 +293,6 @@ namespace Epinova.InfrastructureTests
             Assert.Equal(fooValue + barValue, result.Foo + result.Bar);
         }
 
-        #region Nested type: TestablePayload
-
         /// <remarks>Made public for XML serializing purposes</remarks>
         [XmlRoot("root")]
         public class TestablePayload : IServiceResponseMessage
@@ -303,10 +301,6 @@ namespace Epinova.InfrastructureTests
             public string ErrorMessage { get; set; }
             public string Foo { get; set; }
         }
-
-        #endregion
-
-        #region Nested type: TestableRestService
 
         private class TestableRestService : RestServiceBase
         {
@@ -319,7 +313,5 @@ namespace Epinova.InfrastructureTests
                 return BuildQueryString(nameValueCollection);
             }
         }
-
-        #endregion
     }
 }

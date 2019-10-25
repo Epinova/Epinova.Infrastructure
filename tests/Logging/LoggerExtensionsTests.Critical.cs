@@ -12,8 +12,8 @@ namespace Epinova.InfrastructureTests.Logging
         [Fact]
         public void Critical_LazyLogAnonymousObjectAndExceptionOnDisabledLevel_DoesNotCallMessageFormatter()
         {
-            var isInvoked = false;
-            var logger = new TestableLogger((Level) 1337, _output);
+            bool isInvoked = false;
+            var logger = new TestableLogger((Level)1337, _output);
             int state = Factory.GetInteger();
 
             LoggerExtensions.Critical(logger, state, new Exception("OMG!"), (number, ex) =>
@@ -27,7 +27,7 @@ namespace Epinova.InfrastructureTests.Logging
         [Fact]
         public void Critical_LazyLogAnonymousObjectAndExceptionOnEnabledLevel_CallMessageFormatter()
         {
-            var isInvoked = false;
+            bool isInvoked = false;
             var logger = new TestableLogger(Level.Critical, _output);
             int state = Factory.GetInteger();
 
@@ -42,8 +42,8 @@ namespace Epinova.InfrastructureTests.Logging
         [Fact]
         public void Critical_LazyLogAnonymousObjectOnDisabledLevel_DoesNotCallMessageFormatter()
         {
-            var isInvoked = false;
-            var logger = new TestableLogger((Level) 1337, _output);
+            bool isInvoked = false;
+            var logger = new TestableLogger((Level)1337, _output);
             int state = Factory.GetInteger();
 
             LoggerExtensions.Critical(logger, state, number =>
@@ -57,7 +57,7 @@ namespace Epinova.InfrastructureTests.Logging
         [Fact]
         public void Critical_LazyLogAnonymousObjectOnEnabledLevel_CallMessageFormatter()
         {
-            var isInvoked = false;
+            bool isInvoked = false;
             var logger = new TestableLogger(Level.Critical, _output);
             int state = Factory.GetInteger();
 

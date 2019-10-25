@@ -12,7 +12,7 @@ namespace Epinova.InfrastructureTests.Logging
         [Fact]
         public void Error_LazyLogAnonymousObjectAndExceptionOnDisabledLevel_DoesNotCallMessageFormatter()
         {
-            var isInvoked = false;
+            bool isInvoked = false;
             var logger = new TestableLogger(Level.Critical, _output);
             int state = Factory.GetInteger();
 
@@ -27,7 +27,7 @@ namespace Epinova.InfrastructureTests.Logging
         [Fact]
         public void Error_LazyLogAnonymousObjectAndExceptionOnEnabledLevel_CallMessageFormatter()
         {
-            var isInvoked = false;
+            bool isInvoked = false;
             var logger = new TestableLogger(Level.Error, _output);
             int state = Factory.GetInteger();
 
@@ -42,7 +42,7 @@ namespace Epinova.InfrastructureTests.Logging
         [Fact]
         public void Error_LazyLogAnonymousObjectOnDisabledLevel_DoesNotCallMessageFormatter()
         {
-            var isInvoked = false;
+            bool isInvoked = false;
             var logger = new TestableLogger(Level.Critical, _output);
             int state = Factory.GetInteger();
 
@@ -57,7 +57,7 @@ namespace Epinova.InfrastructureTests.Logging
         [Fact]
         public void Error_LazyLogAnonymousObjectOnEnabledLevel_CallMessageFormatter()
         {
-            var isInvoked = false;
+            bool isInvoked = false;
             var logger = new TestableLogger(Level.Error, _output);
             int state = Factory.GetInteger();
 

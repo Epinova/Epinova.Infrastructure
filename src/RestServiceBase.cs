@@ -137,7 +137,7 @@ namespace Epinova.Infrastructure
 
                 using (var reader = new StringReader(xml))
                 {
-                    return (T) serializer.Deserialize(reader);
+                    return (T)serializer.Deserialize(reader);
                 }
             }
             catch (Exception ex)
